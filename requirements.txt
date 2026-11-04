@@ -1,0 +1,12 @@
+mistralai>=1.9
+elasticsearch>=9,<10
+fastapi
+uvicorn[standard]
+httpx
+pydantic>=2
+pydantic-settings
+h3>=4
+python-multipart
+apscheduler
+pytest
+ruff

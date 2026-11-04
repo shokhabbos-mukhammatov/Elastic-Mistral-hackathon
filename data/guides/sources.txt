@@ -1,0 +1,9 @@
+# Official pages indexed into the guides index (semantic_text via the Mistral embeddings inference endpoint + BM25).
+en https://www.sfpuc.gov/learning/emergency-preparedness/flood-maps
+es https://www.sfpuc.gov/es/learning/emergency-preparedness/flood-maps
+en https://www.sfpuc.gov/floodwatergrant
+en https://www.sfpuc.gov/folsomstorm
+en https://www.sfpuc.gov/learning/emergency-preparedness
+en https://www.sf.gov/san-francisco-floodplain-administration
+en https://www.sf.gov/alertsf
+en https://adoptadrain.sfwater.org/

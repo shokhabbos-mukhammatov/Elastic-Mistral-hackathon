@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HighGround SF</title>
+<meta name="description" content="Block-level flood and storm-hazard briefing for San Francisco residents, in your language.">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header>
+  <h1>HighGround SF</h1>
+  <p class="tag">Is my block going to flood or be dangerous in the next few hours, and what should I do?</p>
+  <p class="disclaimer" role="note">Not an official alert. Call 911 in an emergency. Official alerts: <a href="https://www.sf.gov/alertsf">AlertSF</a>.</p>
+</header>
+<main id="main">
+  <section aria-labelledby="h-brief" class="card">
+    <h2 id="h-brief">Block briefing</h2>
+    <form id="f-brief">
+      <label for="addr">Address or intersection</label>
+      <div class="row">
+        <input id="addr" name="address" autocomplete="street-address" placeholder="17th and Folsom" value="17th and Folsom" required>
+        <label for="lang" class="sr">Language</label>
+        <select id="lang" name="lang">
+          <option value="en">English</option><option value="es">Español</option><option value="zh">中文</option>
+          <option value="tl">Filipino</option><option value="vi">Tiếng Việt</option><option value="ru">Русский</option>
+        </select>
+        <button type="submit">Check my block</button>
+        <button type="button" id="b-locate">Use my location</button>
+      </div>
+    </form>
+    <div id="brief" aria-live="polite"></div>
+  </section>
+
+  <section aria-labelledby="h-map" class="card">
+    <h2 id="h-map">Map</h2>
+    <p class="hint">Blue: 100-year storm flood zone. Dots: 311 flooding, drain, sewer and tree reports (last 72 h). The list below the map has the same data as text.</p>
+    <div id="map" role="img" aria-label="Map of flood zones and recent 311 reports. The same information is in the list below."></div>
+    <h3>Reports near you (last 24 h)</h3>
+    <ol id="nearby" class="list"></ol>
+  </section>
+
+  <section aria-labelledby="h-replay" class="card">
+    <h2 id="h-replay">Storm replay: what if this had existed on Dec 31, 2022?</h2>
+    <p class="hint">Real archived data only, hour by hour, and the risk engine sees nothing from the future. About 5.5 in. of rain fell in SF that day, its second-wettest on record.</p>
+    <div class="row">
+      <label for="rday">Storm day</label>
+      <select id="rday"><option value="2022-12-31">Dec 31, 2022</option></select>
+      <button type="button" id="b-play">Play</button>
+    </div>
+    <label for="rt">Time (Pacific)</label>
+    <input type="range" id="rt" min="0" max="95" value="24" step="1">
+    <p id="rclock" aria-live="polite"></p>
+    <div id="rstats" aria-live="polite"></div>
+    <h3>Backtest</h3>
+    <div id="backtest">Loading…</div>
+  </section>
+
+  <section aria-labelledby="h-ask" class="card">
+    <h2 id="h-ask">Ask anything, in any language</h2>
+    <form id="f-ask">
+      <label for="q">Question</label>
+      <div class="row"><input id="q" placeholder="¿Dónde consigo sacos de arena en la Misión?" required><button type="submit">Ask</button></div>
+    </form>
+    <div id="answer" aria-live="polite"></div>
+  </section>
+
+  <section aria-labelledby="h-report" class="card">
+    <h2 id="h-report">Report a hazard</h2>
+    <form id="f-report">
+      <p class="hint">We check for existing reports nearby first, then draft a SF311 report for you. Nothing is sent without you.</p>
+      <label for="rtext">What do you see?</label>
+      <input id="rtext" name="text" placeholder="Water over the curb, drain is clogged with leaves">
+      <label for="rphoto">Photo (optional)</label>
+      <input id="rphoto" name="photo" type="file" accept="image/*" capture="environment">
+      <button type="submit">Draft my 311 report</button>
+    </form>
+    <div id="draft" aria-live="polite"></div>
+  </section>
+</main>
+<footer><p>Data: SF311 Open311 + DataSF, SFPUC flood maps, NWS, NOAA, Open-Meteo, CHP. Built at the Elastic × Mistral SF Hack Night. <a href="/status">Feed status</a></p></footer>
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>
