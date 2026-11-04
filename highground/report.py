@@ -28,9 +28,9 @@ def draft(s, lat: float, lon: float, text: str, image: bytes | None, mime: str |
     cfg = s.cfg
     by, vision, cat, desc = "keywords", None, classify_text(text), (text or "").strip()[:200]
     if cfg.has_mistral:
-        from mistralai.client import Mistral
+        from highground import llm
 
-        m = Mistral(api_key=cfg.mistral_api_key, timeout_ms=25000)
+        m = llm.client(timeout_ms=40000)
         if audio:  # Voxtral speech-to-text, any language
             t = m.audio.transcriptions.complete(model=cfg.model_transcribe, file={"content": audio, "file_name": "report.webm"})
             text = f"{text} {t.text}".strip()
@@ -43,14 +43,14 @@ def draft(s, lat: float, lon: float, text: str, image: bytes | None, mime: str |
         if image:
             content.append({"type": "image_url", "image_url": f"data:{mime or 'image/jpeg'};base64,{base64.b64encode(image).decode()}"})
         try:
-            r = m.chat.complete(model=cfg.model_large, temperature=0, response_format={"type": "json_object"}, max_tokens=300,
+            r = m.chat.complete(model=cfg.model_large, temperature=0.1, response_format={"type": "json_object"}, max_tokens=1500, **llm.extra(cfg.model_large),
                                 messages=[{"role": "system", "content": PROMPT}, {"role": "user", "content": content}])  # fmt: skip
-            out = json.loads(r.choices[0].message.content)
+            out = json.loads(llm.text(r.choices[0].message.content))
             if out.get("category") in LABELS:
                 cat, desc, by = out["category"], (out.get("description") or desc)[:200], cfg.model_large
                 vision = {k: out.get(k) for k in ("water_visible", "severity", "confidence")} if image else None
-        except Exception:  # noqa: BLE001 - fall back to keyword classification
-            pass
+        except Exception as exc:  # noqa: BLE001 - fall back to keyword classification
+            vision = {"error": f"{type(exc).__name__}: {str(exc)[:160]}"}
     return {"category": cat, "by": by, "vision": vision, "duplicates": duplicates(s, lat, lon, cat),
             "draft": {"category_label": LABELS.get(cat, LABELS["other"]), "description": desc or LABELS.get(cat, ""), "lat": lat, "lon": lon},
             "handoff_url": SF311, "adopt_a_drain": "https://adoptadrain.sfwater.org/" if cat in ("catch_basin", "flooding") else None}  # fmt: skip

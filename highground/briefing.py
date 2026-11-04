@@ -85,10 +85,10 @@ def receipts(text: str, facts: dict) -> tuple[str, list[str]]:
     allowed = {n.replace(",", "") for n in _NUM.findall(json.dumps(facts, ensure_ascii=False, default=str))}
     allowed |= {str(int(float(n))) for n in allowed if n.replace(".", "", 1).isdigit()}
     keep, dropped = [], []
-    for sent in re.split(r"(?<=[.!?。！？])\s*", text.strip()):
+    for sent in re.split(r"(?<=[.!?])\s+|(?<=[。！？])\s*", text.strip()):  # never split inside "9.4"
         nums = [n.replace(",", "") for n in _NUM.findall(sent)]
         (keep if all(n in allowed or n in ("1", "311", "911") for n in nums) else dropped).append(sent)
-    return " ".join(k for k in keep if k), dropped
+    return " ".join(k.strip() for k in keep if k.strip()), dropped
 
 
 def narrate(cfg, risk: Risk, ctx: dict, place: str, lang: str) -> dict:
@@ -99,20 +99,20 @@ def narrate(cfg, risk: Risk, ctx: dict, place: str, lang: str) -> dict:
     if not cfg.has_mistral:
         return fallback
     try:
-        from mistralai.client import Mistral
+        from highground import llm
 
-        m = Mistral(api_key=cfg.mistral_api_key, timeout_ms=12000)
-        r = m.chat.complete(model=cfg.model_large, temperature=0.2, max_tokens=350, messages=[
+        m = llm.client(timeout_ms=25000)
+        r = m.chat.complete(model=cfg.model_large, temperature=0.2, max_tokens=1500, **llm.extra(cfg.model_large), messages=[
             {"role": "system", "content": "You are HighGround SF, a flood and storm-safety helper for San Francisco residents. Write 3-5 short sentences at a 6th-grade "
              "reading level in " + LANGS.get(lang, "the user's language") + ". Use ONLY the facts in the JSON. Never invent numbers, places, times or programs. "
              "Say the risk level, the main reasons, and the 2 most important actions. Do not mention JSON. Not an official alert; for emergencies call 911."},
             {"role": "user", "content": json.dumps(facts, ensure_ascii=False, default=str)}])  # fmt: skip
-        text, dropped = receipts(r.choices[0].message.content, facts)
+        text, dropped = receipts(llm.text(r.choices[0].message.content), facts)
         if len(dropped) > 2 or not text:
             return {**fallback, "dropped": dropped}
         return {"text": text, "lang": lang, "by": cfg.model_large, "dropped": dropped}
     except Exception as exc:  # noqa: BLE001 - the briefing must work without Mistral
-        return {**fallback, "error": f"{type(exc).__name__}"}
+        return {**fallback, "error": f"{type(exc).__name__}: {str(exc)[:160]}"}
 
 
 def briefing(s, lat: float, lon: float, place: str, lang: str = "en", now: datetime | None = None) -> dict:
