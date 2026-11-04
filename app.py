@@ -142,11 +142,16 @@ def get_backtest(day: str, threshold: str = "high"):
     return _backtest(day, threshold)
 
 
-@app.get("/api/ops")
-def get_ops():
+@lru_cache(maxsize=4)
+def _ops(bucket: int, hours: int) -> dict:
     from highground import ops
 
-    return ops.overview(S())
+    return {"hours": hours, "citywide": ops.citywide(S(), hours), "hotspots": ops.hotspots_now(S(), hours), "summary": ops.summary(S(), hours)}
+
+
+@app.get("/api/ops")
+def get_ops(hours: int = Query(72, ge=1, le=720)):
+    return _ops(int(datetime.now(UTC).timestamp() // 300), hours)  # 5-minute cache: COMPLETION calls Mistral
 
 
 @app.get("/status")
@@ -166,6 +171,13 @@ def healthz():
         return {"ok": True}
     except Exception as exc:  # noqa: BLE001
         return JSONResponse({"ok": False, "error": type(exc).__name__}, 503)
+
+
+@app.on_event("startup")
+def warm():
+    import threading
+
+    threading.Thread(target=lambda: [_backtest(d.stem, "high") for d in replay.DIR.glob("*.json")], daemon=True).start()
 
 
 app.mount("/static", StaticFiles(directory=WEB), name="static")

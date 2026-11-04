@@ -48,7 +48,7 @@ function renderBrief(b) {
   const top = (b.history.top_days || []).map((d) => `${esc(d.day)} (${d.reports})`).join(", ");
   $("#brief").innerHTML = `
     <p><span class="level ${lv}" role="img" aria-label="Risk level ${LABEL[lv]}">${ICON[lv]} ${LABEL[lv]} risk</span>
-      <span class="src">${esc(b.place)}${b.neighborhood ? " · " + esc(b.neighborhood) : ""} · as of ${new Date(b.as_of).toLocaleTimeString()}</span></p>
+      <span class="src">${esc(b.place)}${b.neighborhood ? " · " + esc(b.neighborhood) : ""} · as of ${new Date(b.as_of).toLocaleTimeString("en-US", { timeZone: "America/Los_Angeles" })} PT</span></p>
     <p class="narr" lang="${esc(b.narrative.lang)}">${esc(b.narrative.text)}</p>
     <p class="src">Written by ${esc(b.narrative.by)}${b.narrative.dropped?.length ? ` · ${b.narrative.dropped.length} unsupported sentence(s) removed by the receipts check` : ""}</p>
     <h3>Why</h3><ul class="list">${reasons || "<li>No active rain, alerts or reports near this block.</li>"}</ul>
@@ -67,7 +67,21 @@ async function brief(params) {
     loadNearby();
   } catch (e) { $("#brief").textContent = e.message; }
 }
-$("#f-brief").addEventListener("submit", (e) => { e.preventDefault(); brief({ address: $("#addr").value }); });
+$("#f-brief").addEventListener("submit", (e) => { e.preventDefault(); async function loadOps() {
+  try {
+    const o = await api("/api/ops");
+    const hot = o.hotspots.map((h) => `<tr><td>${esc(h.neighborhood || "—")}</td><td>${h.now}</td><td>${h.storm_reports_5y ?? 0}</td><td>${h.in_100yr ? "yes" : "no"}</td></tr>`).join("");
+    const nb = o.citywide.by_neighborhood.map((r) => `<li>${esc(r.neighborhood || "unknown")}: ${r.reports} reports (${r.flooding} flooding)</li>`).join("");
+    const un = o.citywide.unusual.map((u) => esc(u.neighborhood)).join(", ");
+    $("#ops").innerHTML = `${o.summary ? `<p class="narr">${esc(o.summary)}</p><p class="src">Summary written by Mistral inside Elasticsearch (ES|QL COMPLETION)</p>` : ""}
+      <table><caption>Blocks with flood/drain reports in the last ${o.hours} h, and their past-storm history</caption>
+      <thead><tr><th scope="col">Neighborhood</th><th scope="col">Reports now</th><th scope="col">Storm reports, 5 yrs</th><th scope="col">100-yr zone</th></tr></thead><tbody>${hot}</tbody></table>
+      <h3>By neighborhood (${o.hours} h)</h3><ul class="list">${nb}</ul>${un ? `<p>Unusually active vs. the last 5 years: <b>${un}</b></p>` : ""}`;
+  } catch (e) { $("#ops").textContent = e.message; }
+}
+
+brief({ address: $("#addr").value });
+loadOps(); });
 $("#b-locate").addEventListener("click", () => navigator.geolocation?.getCurrentPosition(
   (p) => brief({ lat: p.coords.latitude, lon: p.coords.longitude }), () => ($("#brief").textContent = "Location unavailable. Type an address instead.")));
 
@@ -109,7 +123,7 @@ $("#f-report").addEventListener("submit", async (e) => {
 });
 
 // ---------------------------------------------------------------- replay + backtest
-let meta = null, timer = null;
+let meta = null, timer = null, replayOn = false;
 async function loadReplay() {
   const day = $("#rday").value;
   meta = await api(`/api/replay/${day}`).catch((e) => { $("#rstats").textContent = e.message; return null; });
@@ -131,21 +145,36 @@ async function frame() {
   const f = await api(`/api/replay/${$("#rday").value}?t=${encodeURIComponent(t.toISOString())}`);
   const counts = { elevated: 0, high: 0, severe: 0 };
   const feats = Object.entries(f.cells).map(([c, v]) => { counts[v.level]++; return { type: "Feature", geometry: f.polygons[c], properties: { color: COLOR[v.level] } }; });
-  map.getSource("replay")?.setData({ type: "FeatureCollection", features: feats });
-  map.getSource("rreports")?.setData({ type: "FeatureCollection", features: f.reports.map((r) => ({ type: "Feature", geometry: { type: "Point", coordinates: [r.lon, r.lat] } })) });
+  if (replayOn) map.getSource("replay")?.setData({ type: "FeatureCollection", features: feats });
+  if (replayOn) map.getSource("rreports")?.setData({ type: "FeatureCollection", features: f.reports.map((r) => ({ type: "Feature", geometry: { type: "Point", coordinates: [r.lon, r.lat] } })) });
   const h = meta.hours[Math.floor(Number($("#rt").value) / 4)] || {};
   $("#rstats").innerHTML = `<div class="stats"><div class="stat"><b>${h.rain_mm ?? 0} mm</b>rain this hour (central SF)</div>
     <div class="stat"><b>${counts.high + counts.severe}</b>blocks at High or Severe</div><div class="stat"><b>${counts.elevated}</b>blocks Elevated</div>
     <div class="stat"><b>${f.reports.length}</b>311 reports in the last 6 h</div></div>`;
 }
-$("#rt").addEventListener("input", () => meta && frame());
+$("#rt").addEventListener("input", () => { replayOn = true; if (meta) frame(); });
 $("#b-play").addEventListener("click", () => {
   if (timer) { clearInterval(timer); timer = null; $("#b-play").textContent = "Play"; return; }
   $("#b-play").textContent = "Pause";
+  replayOn = true;
   map.flyTo({ center: [-122.42, 37.755], zoom: 12 });
   timer = setInterval(() => { const v = (Number($("#rt").value) + 1) % 96; $("#rt").value = v; frame(); }, 900);
 });
 $("#rday").addEventListener("change", loadReplay);
 
+async function loadOps() {
+  try {
+    const o = await api("/api/ops");
+    const hot = o.hotspots.map((h) => `<tr><td>${esc(h.neighborhood || "—")}</td><td>${h.now}</td><td>${h.storm_reports_5y ?? 0}</td><td>${h.in_100yr ? "yes" : "no"}</td></tr>`).join("");
+    const nb = o.citywide.by_neighborhood.map((r) => `<li>${esc(r.neighborhood || "unknown")}: ${r.reports} reports (${r.flooding} flooding)</li>`).join("");
+    const un = o.citywide.unusual.map((u) => esc(u.neighborhood)).join(", ");
+    $("#ops").innerHTML = `${o.summary ? `<p class="narr">${esc(o.summary)}</p><p class="src">Summary written by Mistral inside Elasticsearch (ES|QL COMPLETION)</p>` : ""}
+      <table><caption>Blocks with flood/drain reports in the last ${o.hours} h, and their past-storm history</caption>
+      <thead><tr><th scope="col">Neighborhood</th><th scope="col">Reports now</th><th scope="col">Storm reports, 5 yrs</th><th scope="col">100-yr zone</th></tr></thead><tbody>${hot}</tbody></table>
+      <h3>By neighborhood (${o.hours} h)</h3><ul class="list">${nb}</ul>${un ? `<p>Unusually active vs. the last 5 years: <b>${un}</b></p>` : ""}`;
+  } catch (e) { $("#ops").textContent = e.message; }
+}
+
 brief({ address: $("#addr").value });
+loadOps();
 loadReplay();
