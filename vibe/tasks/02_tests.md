@@ -1,0 +1,8 @@
+You are working in the HighGround SF repo. Read AGENTS.md, highground/risk.py, highground/replay.py, highground/feeds.py and the JSON/XML fixtures in tests/fixtures/.
+
+Task: write fast pytest unit tests (no network, no Elasticsearch) and make them pass with `.venv/bin/pytest -q` (or `pytest -q`):
+- `tests/test_risk.py`: `assess()` is deterministic and pure; a dry block in no zone is "low"; heavy rain (rain_3h >= 33 mm) on a 100-year-zone block with storm history reaches at least "high"; a Flood Warning raises the score vs. no product; nearby flood reports raise confirmation; reasons carry codes and the receipts-friendly numbers; `level_for` thresholds.
+- `tests/test_replay.py`: build a tiny synthetic replay dataset dict (2-3 cells using `highground.geo.cell`, a few hourly weather rows for every point in `geo.POINTS`, one NWS product, a few reports with ISO timestamps) and check **no look-ahead**: `Replay(ds).inputs(cell, t)` never counts a report or an hour of rain that ends after `t`; `backtest()` returns the expected keys and counts.
+- `tests/test_feeds.py`: parse the saved fixtures: `open311_doc` on tests/fixtures/open311_sewer.json rows, `datasf_doc` on datasf_311_20221231.json, `nws_docs`, `iem_docs`, `tide_docs`, `chp_docs` (chp_ggcc.xml), `weather_docs`; check ids are deterministic and `merge()` keeps the stronger category source and the newest status.
+- `tests/test_briefing.py`: `briefing.receipts()` drops a sentence with a made-up number and keeps sentences whose numbers appear in the facts.
+Only change files under tests/ unless a test exposes a real bug; if so, fix the bug minimally and mention it in your final message.
