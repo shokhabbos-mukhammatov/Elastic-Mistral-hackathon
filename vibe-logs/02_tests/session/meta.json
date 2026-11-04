@@ -1,0 +1,30 @@
+{
+  "session_id": "013f3ebd-d7bc-6b1b-239f-871a3fd635bb",
+  "parent_session_id": null,
+  "start_time": "2026-11-04T02:20:47.090000+00:00",
+  "end_time": "2026-11-04T02:31:48.512000+00:00",
+  "git_commit": null,
+  "git_branch": null,
+  "environment": {
+    "working_directory": "/home/user/Elastic-Mistral-hackathon"
+  },
+  "origin_directory": "/home/user/Elastic-Mistral-hackathon",
+  "username": "root",
+  "child_sessions": [],
+  "loops": [],
+  "title": null,
+  "title_source": "auto",
+  "bumped_at": "2026-11-04T02:20:49.440875+00:00",
+  "pinned_at": null,
+  "archived_at": null,
+  "unseen_at": "2026-11-04T02:31:48.526656+00:00",
+  "seen_at": null,
+  "experiments": null,
+  "config": {
+    "active_model": "mistral-large-4-0-3",
+    "model_name": "mistral-large-4-0"
+  },
+  "import_provenance": null,
+  "created_worktree": null,
+  "artifacts": []
+}
