@@ -52,18 +52,19 @@ def ask(s, question: str, lat: float | None = None, lon: float | None = None) ->
     if not cfg.has_mistral:  # still useful without a model: return the best official passages
         hits = guides.search(s, question)
         return {"answer": hits[0]["text"] if hits else "No answer available.", "citations": [{"url": h["url"], "title": h["title"]} for h in hits], "tools": ["search_guides"], "by": "search-only"}
-    from mistralai.client import Mistral
+    from highground import llm
 
-    m = Mistral(api_key=cfg.mistral_api_key, timeout_ms=20000)
+    m = llm.client(timeout_ms=40000)
+    kw = {"temperature": 0.2, "max_tokens": 2000, **llm.extra(cfg.model_large)}
     ctx = f" The user's current location is lat {here[0]:.5f}, lon {here[1]:.5f}." if here else ""
     msgs = [{"role": "system", "content": SYSTEM + ctx}, {"role": "user", "content": question}]
     used, cites = [], {}
     for _ in range(4):
-        r = m.chat.complete(model=cfg.model_large, messages=msgs, tools=TOOLS, tool_choice="auto", temperature=0.2, max_tokens=600)
+        r = m.chat.complete(model=cfg.model_large, messages=msgs, tools=TOOLS, tool_choice="auto", **kw)
         msg = r.choices[0].message
         if not msg.tool_calls:
-            return {"answer": msg.content, "citations": list(cites.values()), "tools": used, "by": cfg.model_large}
-        msgs.append({"role": "assistant", "content": msg.content or "", "tool_calls": [
+            return {"answer": llm.text(msg.content), "citations": list(cites.values()), "tools": used, "by": cfg.model_large}
+        msgs.append({"role": "assistant", "content": llm.text(msg.content), "tool_calls": [
             {"id": tc.id, "type": "function", "function": {"name": tc.function.name, "arguments": tc.function.arguments}} for tc in msg.tool_calls]})  # fmt: skip
         for tc in msg.tool_calls:
             args = tc.function.arguments if isinstance(tc.function.arguments, dict) else json.loads(tc.function.arguments or "{}")
@@ -75,5 +76,5 @@ def ask(s, question: str, lat: float | None = None, lon: float | None = None) ->
                 cites[g["url"]] = {"url": g["url"], "title": g["title"]}
             used.append(tc.function.name)
             msgs.append({"role": "tool", "tool_call_id": tc.id, "name": tc.function.name, "content": json.dumps(out, default=str, ensure_ascii=False)[:12000]})
-    r = m.chat.complete(model=cfg.model_large, messages=msgs, temperature=0.2, max_tokens=600)
-    return {"answer": r.choices[0].message.content, "citations": list(cites.values()), "tools": used, "by": cfg.model_large}
+    r = m.chat.complete(model=cfg.model_large, messages=msgs, **kw)
+    return {"answer": llm.text(r.choices[0].message.content), "citations": list(cites.values()), "tools": used, "by": cfg.model_large}
