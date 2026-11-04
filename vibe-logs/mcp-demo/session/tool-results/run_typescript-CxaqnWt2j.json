@@ -1,0 +1,1186 @@
+[
+  {
+    "h3": "892830829d7ffff",
+    "r": {
+      "results": [
+        {
+          "type": "query",
+          "data": {
+            "esql": "FROM hn-reports\n| WHERE category == \"flooding\" AND h3_9 == \"892830829d7ffff\"\n| STATS reports = COUNT(*) BY h3_9, year = DATE_EXTRACT(\"year\", requested_at)\n| LOOKUP JOIN hn-profiles ON h3_9\n| KEEP h3_9, year, reports, neighborhood, in_100yr, slr24, storm_reports_5y,\n      storm_days_5y\n| SORT year DESC"
+          },
+          "tool_result_id": "DZKQnU"
+        },
+        {
+          "tool_result_id": "b7cYiQ",
+          "type": "esql_results",
+          "data": {
+            "source": "esql",
+            "query": "FROM hn-reports\n| WHERE category == \"flooding\" AND h3_9 == \"892830829d7ffff\"\n| STATS reports = COUNT(*) BY h3_9, year = DATE_EXTRACT(\"year\", requested_at)\n| LOOKUP JOIN hn-profiles ON h3_9\n| KEEP h3_9, year, reports, neighborhood, in_100yr, slr24, storm_reports_5y,\n      storm_days_5y\n| SORT year DESC",
+            "columns": [
+              {
+                "name": "h3_9",
+                "type": "keyword"
+              },
+              {
+                "name": "year",
+                "type": "long"
+              },
+              {
+                "name": "reports",
+                "type": "long"
+              },
+              {
+                "name": "neighborhood",
+                "type": "keyword"
+              },
+              {
+                "name": "in_100yr",
+                "type": "boolean"
+              },
+              {
+                "name": "slr24",
+                "type": "boolean"
+              },
+              {
+                "name": "storm_reports_5y",
+                "type": "integer"
+              },
+              {
+                "name": "storm_days_5y",
+                "type": "integer"
+              }
+            ],
+            "values": [
+              [
+                "892830829d7ffff",
+                2026,
+                2,
+                "Hayes Valley",
+                false,
+                false,
+                114,
+                35
+              ],
+              [
+                "892830829d7ffff",
+                2025,
+                11,
+                "Hayes Valley",
+                false,
+                false,
+                114,
+                35
+              ],
+              [
+                "892830829d7ffff",
+                2024,
+                2,
+                "Hayes Valley",
+                false,
+                false,
+                114,
+                35
+              ],
+              [
+                "892830829d7ffff",
+                2023,
+                6,
+                "Hayes Valley",
+                false,
+                false,
+                114,
+                35
+              ],
+              [
+                "892830829d7ffff",
+                2022,
+                3,
+                "Hayes Valley",
+                false,
+                false,
+                114,
+                35
+              ],
+              [
+                "892830829d7ffff",
+                2021,
+                11,
+                "Hayes Valley",
+                false,
+                false,
+                114,
+                35
+              ],
+              [
+                "892830829d7ffff",
+                2019,
+                13,
+                "Hayes Valley",
+                false,
+                false,
+                114,
+                35
+              ],
+              [
+                "892830829d7ffff",
+                2018,
+                8,
+                "Hayes Valley",
+                false,
+                false,
+                114,
+                35
+              ],
+              [
+                "892830829d7ffff",
+                2017,
+                1,
+                "Hayes Valley",
+                false,
+                false,
+                114,
+                35
+              ]
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "h3": "892830821c7ffff",
+    "r": {
+      "results": [
+        {
+          "type": "query",
+          "data": {
+            "esql": "FROM hn-reports\n| WHERE category == \"flooding\" AND h3_9 == \"892830821c7ffff\"\n| STATS reports = COUNT(*) BY h3_9, year = DATE_EXTRACT(\"year\", requested_at)\n| LOOKUP JOIN hn-profiles ON h3_9\n| KEEP h3_9, year, reports, neighborhood, in_100yr, slr24, storm_reports_5y,\n      storm_days_5y\n| SORT year DESC"
+          },
+          "tool_result_id": "cQpXbS"
+        },
+        {
+          "tool_result_id": "AugnBq",
+          "type": "esql_results",
+          "data": {
+            "source": "esql",
+            "query": "FROM hn-reports\n| WHERE category == \"flooding\" AND h3_9 == \"892830821c7ffff\"\n| STATS reports = COUNT(*) BY h3_9, year = DATE_EXTRACT(\"year\", requested_at)\n| LOOKUP JOIN hn-profiles ON h3_9\n| KEEP h3_9, year, reports, neighborhood, in_100yr, slr24, storm_reports_5y,\n      storm_days_5y\n| SORT year DESC",
+            "columns": [
+              {
+                "name": "h3_9",
+                "type": "keyword"
+              },
+              {
+                "name": "year",
+                "type": "long"
+              },
+              {
+                "name": "reports",
+                "type": "long"
+              },
+              {
+                "name": "neighborhood",
+                "type": "keyword"
+              },
+              {
+                "name": "in_100yr",
+                "type": "boolean"
+              },
+              {
+                "name": "slr24",
+                "type": "boolean"
+              },
+              {
+                "name": "storm_reports_5y",
+                "type": "integer"
+              },
+              {
+                "name": "storm_days_5y",
+                "type": "integer"
+              }
+            ],
+            "values": [
+              [
+                "892830821c7ffff",
+                2026,
+                2,
+                "Bayview Hunters Point",
+                false,
+                false,
+                20,
+                35
+              ],
+              [
+                "892830821c7ffff",
+                2025,
+                1,
+                "Bayview Hunters Point",
+                false,
+                false,
+                20,
+                35
+              ],
+              [
+                "892830821c7ffff",
+                2024,
+                1,
+                "Bayview Hunters Point",
+                false,
+                false,
+                20,
+                35
+              ],
+              [
+                "892830821c7ffff",
+                2022,
+                2,
+                "Bayview Hunters Point",
+                false,
+                false,
+                20,
+                35
+              ],
+              [
+                "892830821c7ffff",
+                2021,
+                1,
+                "Bayview Hunters Point",
+                false,
+                false,
+                20,
+                35
+              ],
+              [
+                "892830821c7ffff",
+                2020,
+                1,
+                "Bayview Hunters Point",
+                false,
+                false,
+                20,
+                35
+              ],
+              [
+                "892830821c7ffff",
+                2019,
+                9,
+                "Bayview Hunters Point",
+                false,
+                false,
+                20,
+                35
+              ],
+              [
+                "892830821c7ffff",
+                2018,
+                8,
+                "Bayview Hunters Point",
+                false,
+                false,
+                20,
+                35
+              ],
+              [
+                "892830821c7ffff",
+                2017,
+                1,
+                "Bayview Hunters Point",
+                false,
+                false,
+                20,
+                35
+              ]
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "h3": "892830821cfffff",
+    "r": {
+      "results": [
+        {
+          "type": "query",
+          "data": {
+            "esql": "FROM hn-reports\n| WHERE category == \"flooding\" AND h3_9 == \"892830821cfffff\"\n| STATS reports = COUNT(*) BY h3_9, year = DATE_EXTRACT(\"year\", requested_at)\n| LOOKUP JOIN hn-profiles ON h3_9\n| KEEP h3_9, year, reports, neighborhood, in_100yr, slr24, storm_reports_5y,\n      storm_days_5y\n| SORT year DESC"
+          },
+          "tool_result_id": "i3m8Gk"
+        },
+        {
+          "tool_result_id": "UtXTK5",
+          "type": "esql_results",
+          "data": {
+            "source": "esql",
+            "query": "FROM hn-reports\n| WHERE category == \"flooding\" AND h3_9 == \"892830821cfffff\"\n| STATS reports = COUNT(*) BY h3_9, year = DATE_EXTRACT(\"year\", requested_at)\n| LOOKUP JOIN hn-profiles ON h3_9\n| KEEP h3_9, year, reports, neighborhood, in_100yr, slr24, storm_reports_5y,\n      storm_days_5y\n| SORT year DESC",
+            "columns": [
+              {
+                "name": "h3_9",
+                "type": "keyword"
+              },
+              {
+                "name": "year",
+                "type": "long"
+              },
+              {
+                "name": "reports",
+                "type": "long"
+              },
+              {
+                "name": "neighborhood",
+                "type": "keyword"
+              },
+              {
+                "name": "in_100yr",
+                "type": "boolean"
+              },
+              {
+                "name": "slr24",
+                "type": "boolean"
+              },
+              {
+                "name": "storm_reports_5y",
+                "type": "integer"
+              },
+              {
+                "name": "storm_days_5y",
+                "type": "integer"
+              }
+            ],
+            "values": [
+              [
+                "892830821cfffff",
+                2026,
+                3,
+                "Bayview Hunters Point",
+                false,
+                false,
+                23,
+                35
+              ],
+              [
+                "892830821cfffff",
+                2025,
+                1,
+                "Bayview Hunters Point",
+                false,
+                false,
+                23,
+                35
+              ],
+              [
+                "892830821cfffff",
+                2024,
+                3,
+                "Bayview Hunters Point",
+                false,
+                false,
+                23,
+                35
+              ],
+              [
+                "892830821cfffff",
+                2023,
+                6,
+                "Bayview Hunters Point",
+                false,
+                false,
+                23,
+                35
+              ],
+              [
+                "892830821cfffff",
+                2022,
+                2,
+                "Bayview Hunters Point",
+                false,
+                false,
+                23,
+                35
+              ],
+              [
+                "892830821cfffff",
+                2021,
+                2,
+                "Bayview Hunters Point",
+                false,
+                false,
+                23,
+                35
+              ],
+              [
+                "892830821cfffff",
+                2020,
+                2,
+                "Bayview Hunters Point",
+                false,
+                false,
+                23,
+                35
+              ],
+              [
+                "892830821cfffff",
+                2019,
+                5,
+                "Bayview Hunters Point",
+                false,
+                false,
+                23,
+                35
+              ],
+              [
+                "892830821cfffff",
+                2018,
+                9,
+                "Bayview Hunters Point",
+                false,
+                false,
+                23,
+                35
+              ],
+              [
+                "892830821cfffff",
+                2017,
+                4,
+                "Bayview Hunters Point",
+                false,
+                false,
+                23,
+                35
+              ]
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "h3": "89283082b8bffff",
+    "r": {
+      "results": [
+        {
+          "type": "query",
+          "data": {
+            "esql": "FROM hn-reports\n| WHERE category == \"flooding\" AND h3_9 == \"89283082b8bffff\"\n| STATS reports = COUNT(*) BY h3_9, year = DATE_EXTRACT(\"year\", requested_at)\n| LOOKUP JOIN hn-profiles ON h3_9\n| KEEP h3_9, year, reports, neighborhood, in_100yr, slr24, storm_reports_5y,\n      storm_days_5y\n| SORT year DESC"
+          },
+          "tool_result_id": "NwTPkY"
+        },
+        {
+          "tool_result_id": "o7uR0t",
+          "type": "esql_results",
+          "data": {
+            "source": "esql",
+            "query": "FROM hn-reports\n| WHERE category == \"flooding\" AND h3_9 == \"89283082b8bffff\"\n| STATS reports = COUNT(*) BY h3_9, year = DATE_EXTRACT(\"year\", requested_at)\n| LOOKUP JOIN hn-profiles ON h3_9\n| KEEP h3_9, year, reports, neighborhood, in_100yr, slr24, storm_reports_5y,\n      storm_days_5y\n| SORT year DESC",
+            "columns": [
+              {
+                "name": "h3_9",
+                "type": "keyword"
+              },
+              {
+                "name": "year",
+                "type": "long"
+              },
+              {
+                "name": "reports",
+                "type": "long"
+              },
+              {
+                "name": "neighborhood",
+                "type": "keyword"
+              },
+              {
+                "name": "in_100yr",
+                "type": "boolean"
+              },
+              {
+                "name": "slr24",
+                "type": "boolean"
+              },
+              {
+                "name": "storm_reports_5y",
+                "type": "integer"
+              },
+              {
+                "name": "storm_days_5y",
+                "type": "integer"
+              }
+            ],
+            "values": [
+              [
+                "89283082b8bffff",
+                2026,
+                2,
+                "Nob Hill",
+                false,
+                false,
+                74,
+                35
+              ],
+              [
+                "89283082b8bffff",
+                2025,
+                3,
+                "Nob Hill",
+                false,
+                false,
+                74,
+                35
+              ],
+              [
+                "89283082b8bffff",
+                2024,
+                7,
+                "Nob Hill",
+                false,
+                false,
+                74,
+                35
+              ],
+              [
+                "89283082b8bffff",
+                2023,
+                2,
+                "Nob Hill",
+                false,
+                false,
+                74,
+                35
+              ],
+              [
+                "89283082b8bffff",
+                2022,
+                2,
+                "Nob Hill",
+                false,
+                false,
+                74,
+                35
+              ],
+              [
+                "89283082b8bffff",
+                2021,
+                7,
+                "Nob Hill",
+                false,
+                false,
+                74,
+                35
+              ],
+              [
+                "89283082b8bffff",
+                2020,
+                4,
+                "Nob Hill",
+                false,
+                false,
+                74,
+                35
+              ],
+              [
+                "89283082b8bffff",
+                2019,
+                2,
+                "Nob Hill",
+                false,
+                false,
+                74,
+                35
+              ],
+              [
+                "89283082b8bffff",
+                2018,
+                7,
+                "Nob Hill",
+                false,
+                false,
+                74,
+                35
+              ]
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "h3": "8928308285bffff",
+    "r": {
+      "results": [
+        {
+          "type": "query",
+          "data": {
+            "esql": "FROM hn-reports\n| WHERE category == \"flooding\" AND h3_9 == \"8928308285bffff\"\n| STATS reports = COUNT(*) BY h3_9, year = DATE_EXTRACT(\"year\", requested_at)\n| LOOKUP JOIN hn-profiles ON h3_9\n| KEEP h3_9, year, reports, neighborhood, in_100yr, slr24, storm_reports_5y,\n      storm_days_5y\n| SORT year DESC"
+          },
+          "tool_result_id": "YgQYP4"
+        },
+        {
+          "tool_result_id": "RUI3QD",
+          "type": "esql_results",
+          "data": {
+            "source": "esql",
+            "query": "FROM hn-reports\n| WHERE category == \"flooding\" AND h3_9 == \"8928308285bffff\"\n| STATS reports = COUNT(*) BY h3_9, year = DATE_EXTRACT(\"year\", requested_at)\n| LOOKUP JOIN hn-profiles ON h3_9\n| KEEP h3_9, year, reports, neighborhood, in_100yr, slr24, storm_reports_5y,\n      storm_days_5y\n| SORT year DESC",
+            "columns": [
+              {
+                "name": "h3_9",
+                "type": "keyword"
+              },
+              {
+                "name": "year",
+                "type": "long"
+              },
+              {
+                "name": "reports",
+                "type": "long"
+              },
+              {
+                "name": "neighborhood",
+                "type": "keyword"
+              },
+              {
+                "name": "in_100yr",
+                "type": "boolean"
+              },
+              {
+                "name": "slr24",
+                "type": "boolean"
+              },
+              {
+                "name": "storm_reports_5y",
+                "type": "integer"
+              },
+              {
+                "name": "storm_days_5y",
+                "type": "integer"
+              }
+            ],
+            "values": [
+              [
+                "8928308285bffff",
+                2026,
+                2,
+                "South of Market",
+                false,
+                false,
+                143,
+                35
+              ],
+              [
+                "8928308285bffff",
+                2025,
+                1,
+                "South of Market",
+                false,
+                false,
+                143,
+                35
+              ],
+              [
+                "8928308285bffff",
+                2023,
+                6,
+                "South of Market",
+                false,
+                false,
+                143,
+                35
+              ],
+              [
+                "8928308285bffff",
+                2022,
+                1,
+                "South of Market",
+                false,
+                false,
+                143,
+                35
+              ],
+              [
+                "8928308285bffff",
+                2021,
+                3,
+                "South of Market",
+                false,
+                false,
+                143,
+                35
+              ],
+              [
+                "8928308285bffff",
+                2020,
+                4,
+                "South of Market",
+                false,
+                false,
+                143,
+                35
+              ],
+              [
+                "8928308285bffff",
+                2019,
+                10,
+                "South of Market",
+                false,
+                false,
+                143,
+                35
+              ],
+              [
+                "8928308285bffff",
+                2018,
+                4,
+                "South of Market",
+                false,
+                false,
+                143,
+                35
+              ],
+              [
+                "8928308285bffff",
+                2017,
+                1,
+                "South of Market",
+                false,
+                false,
+                143,
+                35
+              ]
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "h3": "8928308299bffff",
+    "r": {
+      "results": [
+        {
+          "type": "query",
+          "data": {
+            "esql": "FROM hn-reports\n| WHERE category == \"flooding\" AND h3_9 == \"8928308299bffff\"\n| STATS reports = COUNT(*) BY h3_9, year = DATE_EXTRACT(\"year\", requested_at)\n| LOOKUP JOIN hn-profiles ON h3_9\n| KEEP h3_9, year, reports, neighborhood, in_100yr, slr24, storm_reports_5y,\n      storm_days_5y\n| SORT year DESC"
+          },
+          "tool_result_id": "LW5M4e"
+        },
+        {
+          "tool_result_id": "wtl6uG",
+          "type": "esql_results",
+          "data": {
+            "source": "esql",
+            "query": "FROM hn-reports\n| WHERE category == \"flooding\" AND h3_9 == \"8928308299bffff\"\n| STATS reports = COUNT(*) BY h3_9, year = DATE_EXTRACT(\"year\", requested_at)\n| LOOKUP JOIN hn-profiles ON h3_9\n| KEEP h3_9, year, reports, neighborhood, in_100yr, slr24, storm_reports_5y,\n      storm_days_5y\n| SORT year DESC",
+            "columns": [
+              {
+                "name": "h3_9",
+                "type": "keyword"
+              },
+              {
+                "name": "year",
+                "type": "long"
+              },
+              {
+                "name": "reports",
+                "type": "long"
+              },
+              {
+                "name": "neighborhood",
+                "type": "keyword"
+              },
+              {
+                "name": "in_100yr",
+                "type": "boolean"
+              },
+              {
+                "name": "slr24",
+                "type": "boolean"
+              },
+              {
+                "name": "storm_reports_5y",
+                "type": "integer"
+              },
+              {
+                "name": "storm_days_5y",
+                "type": "integer"
+              }
+            ],
+            "values": [
+              [
+                "8928308299bffff",
+                2026,
+                1,
+                "Golden Gate Park",
+                false,
+                false,
+                112,
+                35
+              ],
+              [
+                "8928308299bffff",
+                2025,
+                7,
+                "Golden Gate Park",
+                false,
+                false,
+                112,
+                35
+              ],
+              [
+                "8928308299bffff",
+                2024,
+                3,
+                "Golden Gate Park",
+                false,
+                false,
+                112,
+                35
+              ],
+              [
+                "8928308299bffff",
+                2023,
+                7,
+                "Golden Gate Park",
+                false,
+                false,
+                112,
+                35
+              ],
+              [
+                "8928308299bffff",
+                2022,
+                6,
+                "Golden Gate Park",
+                false,
+                false,
+                112,
+                35
+              ],
+              [
+                "8928308299bffff",
+                2021,
+                3,
+                "Golden Gate Park",
+                false,
+                false,
+                112,
+                35
+              ],
+              [
+                "8928308299bffff",
+                2020,
+                1,
+                "Golden Gate Park",
+                false,
+                false,
+                112,
+                35
+              ],
+              [
+                "8928308299bffff",
+                2019,
+                10,
+                "Golden Gate Park",
+                false,
+                false,
+                112,
+                35
+              ]
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "h3": "89283082963ffff",
+    "r": {
+      "results": [
+        {
+          "type": "query",
+          "data": {
+            "esql": "FROM hn-reports\n| WHERE category == \"flooding\" AND h3_9 == \"89283082963ffff\"\n| STATS reports = COUNT(*) BY h3_9, year = DATE_EXTRACT(\"year\", requested_at)\n| LOOKUP JOIN hn-profiles ON h3_9\n| KEEP h3_9, year, reports, neighborhood, in_100yr, slr24, storm_reports_5y,\n      storm_days_5y\n| SORT year DESC"
+          },
+          "tool_result_id": "3wDGOt"
+        },
+        {
+          "tool_result_id": "v7teC4",
+          "type": "esql_results",
+          "data": {
+            "source": "esql",
+            "query": "FROM hn-reports\n| WHERE category == \"flooding\" AND h3_9 == \"89283082963ffff\"\n| STATS reports = COUNT(*) BY h3_9, year = DATE_EXTRACT(\"year\", requested_at)\n| LOOKUP JOIN hn-profiles ON h3_9\n| KEEP h3_9, year, reports, neighborhood, in_100yr, slr24, storm_reports_5y,\n      storm_days_5y\n| SORT year DESC",
+            "columns": [
+              {
+                "name": "h3_9",
+                "type": "keyword"
+              },
+              {
+                "name": "year",
+                "type": "long"
+              },
+              {
+                "name": "reports",
+                "type": "long"
+              },
+              {
+                "name": "neighborhood",
+                "type": "keyword"
+              },
+              {
+                "name": "in_100yr",
+                "type": "boolean"
+              },
+              {
+                "name": "slr24",
+                "type": "boolean"
+              },
+              {
+                "name": "storm_reports_5y",
+                "type": "integer"
+              },
+              {
+                "name": "storm_days_5y",
+                "type": "integer"
+              }
+            ],
+            "values": [
+              [
+                "89283082963ffff",
+                2026,
+                4,
+                "Pacific Heights",
+                false,
+                false,
+                101,
+                35
+              ],
+              [
+                "89283082963ffff",
+                2025,
+                5,
+                "Pacific Heights",
+                false,
+                false,
+                101,
+                35
+              ],
+              [
+                "89283082963ffff",
+                2024,
+                13,
+                "Pacific Heights",
+                false,
+                false,
+                101,
+                35
+              ],
+              [
+                "89283082963ffff",
+                2023,
+                6,
+                "Pacific Heights",
+                false,
+                false,
+                101,
+                35
+              ],
+              [
+                "89283082963ffff",
+                2022,
+                2,
+                "Pacific Heights",
+                false,
+                false,
+                101,
+                35
+              ],
+              [
+                "89283082963ffff",
+                2021,
+                4,
+                "Pacific Heights",
+                false,
+                false,
+                101,
+                35
+              ],
+              [
+                "89283082963ffff",
+                2020,
+                2,
+                "Pacific Heights",
+                false,
+                false,
+                101,
+                35
+              ],
+              [
+                "89283082963ffff",
+                2019,
+                14,
+                "Pacific Heights",
+                false,
+                false,
+                101,
+                35
+              ],
+              [
+                "89283082963ffff",
+                2018,
+                5,
+                "Pacific Heights",
+                false,
+                false,
+                101,
+                35
+              ],
+              [
+                "89283082963ffff",
+                2017,
+                2,
+                "Pacific Heights",
+                false,
+                false,
+                101,
+                35
+              ]
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "h3": "89283082a77ffff",
+    "r": {
+      "results": [
+        {
+          "type": "query",
+          "data": {
+            "esql": "FROM hn-reports\n| WHERE category == \"flooding\" AND h3_9 == \"89283082a77ffff\"\n| STATS reports = COUNT(*) BY h3_9, year = DATE_EXTRACT(\"year\", requested_at)\n| LOOKUP JOIN hn-profiles ON h3_9\n| KEEP h3_9, year, reports, neighborhood, in_100yr, slr24, storm_reports_5y,\n      storm_days_5y\n| SORT year DESC"
+          },
+          "tool_result_id": "6dVjko"
+        },
+        {
+          "tool_result_id": "gWAhGn",
+          "type": "esql_results",
+          "data": {
+            "source": "esql",
+            "query": "FROM hn-reports\n| WHERE category == \"flooding\" AND h3_9 == \"89283082a77ffff\"\n| STATS reports = COUNT(*) BY h3_9, year = DATE_EXTRACT(\"year\", requested_at)\n| LOOKUP JOIN hn-profiles ON h3_9\n| KEEP h3_9, year, reports, neighborhood, in_100yr, slr24, storm_reports_5y,\n      storm_days_5y\n| SORT year DESC",
+            "columns": [
+              {
+                "name": "h3_9",
+                "type": "keyword"
+              },
+              {
+                "name": "year",
+                "type": "long"
+              },
+              {
+                "name": "reports",
+                "type": "long"
+              },
+              {
+                "name": "neighborhood",
+                "type": "keyword"
+              },
+              {
+                "name": "in_100yr",
+                "type": "boolean"
+              },
+              {
+                "name": "slr24",
+                "type": "boolean"
+              },
+              {
+                "name": "storm_reports_5y",
+                "type": "integer"
+              },
+              {
+                "name": "storm_days_5y",
+                "type": "integer"
+              }
+            ],
+            "values": [
+              [
+                "89283082a77ffff",
+                2026,
+                4,
+                "Financial District/South Beach",
+                false,
+                true,
+                47,
+                35
+              ],
+              [
+                "89283082a77ffff",
+                2025,
+                3,
+                "Financial District/South Beach",
+                false,
+                true,
+                47,
+                35
+              ],
+              [
+                "89283082a77ffff",
+                2024,
+                4,
+                "Financial District/South Beach",
+                false,
+                true,
+                47,
+                35
+              ],
+              [
+                "89283082a77ffff",
+                2023,
+                4,
+                "Financial District/South Beach",
+                false,
+                true,
+                47,
+                35
+              ],
+              [
+                "89283082a77ffff",
+                2022,
+                3,
+                "Financial District/South Beach",
+                false,
+                true,
+                47,
+                35
+              ],
+              [
+                "89283082a77ffff",
+                2021,
+                4,
+                "Financial District/South Beach",
+                false,
+                true,
+                47,
+                35
+              ],
+              [
+                "89283082a77ffff",
+                2019,
+                8,
+                "Financial District/South Beach",
+                false,
+                true,
+                47,
+                35
+              ],
+              [
+                "89283082a77ffff",
+                2018,
+                7,
+                "Financial District/South Beach",
+                false,
+                true,
+                47,
+                35
+              ]
+            ]
+          }
+        }
+      ]
+    }
+  }
+]
