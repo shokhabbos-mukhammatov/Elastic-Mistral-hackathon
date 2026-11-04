@@ -25,9 +25,9 @@ def hotspots_now(s, hours: int = 6) -> list[dict]:
     """Blocks with recent reports joined to their 5-year storm history (ES|QL LOOKUP JOIN on a lookup-mode index)."""
     return s.esql(f"""FROM {s.ix("reports")}
 | WHERE requested_at >= NOW() - TO_TIMEDURATION(CONCAT(TO_STRING(?hours), " hours")) AND category IN ("flooding", "catch_basin")
-| STATS now = COUNT(*) BY h3_9
+| STATS now = COUNT(*), hood = MV_FIRST(VALUES(neighborhood)) BY h3_9
 | LOOKUP JOIN {s.ix("profiles")} ON h3_9
-| EVAL repeat_offender = storm_reports_5y >= 10
+| EVAL neighborhood = COALESCE(neighborhood, hood), storm_reports_5y = COALESCE(storm_reports_5y, 0), repeat_offender = storm_reports_5y >= 10
 | KEEP h3_9, now, storm_reports_5y, in_100yr, neighborhood, repeat_offender
 | SORT now DESC, storm_reports_5y DESC | LIMIT 15""", [{"hours": hours}])  # fmt: skip
 

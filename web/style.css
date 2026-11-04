@@ -33,3 +33,4 @@ button[type=button]#b-locate { background: transparent; color: var(--accent); bo
 footer { color: var(--muted); font-size: .9rem; padding-bottom: 32px; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 #rtext { width: 100%; }
+table { border-collapse: collapse; width: 100%; font-size: .95rem; } th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); } caption { text-align: left; color: var(--muted); padding: 4px 0; }
